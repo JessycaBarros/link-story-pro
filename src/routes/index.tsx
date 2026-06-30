@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
   component: BioLink,
 });
 
-type ServiceKey = "impulsione" | "consultoria" | "gestao" | "xdigital";
+type ServiceKey = "impulsione" | "enxuta" | "completa" | "gestao" | "xdigital";
 
 const SERVICES: Record<
   ServiceKey,
@@ -45,17 +45,26 @@ const SERVICES: Record<
     title: "Impulsione",
     tag: "Curso",
     description:
-      "Aprenda a anunciar no Instagram do jeito certo, sem depender de agência. Atraia seguidores qualificados, venda mais e crie campanhas estratégicas por conta própria. Ideal para quem está começando ou quer economizar na gestão de tráfego.",
-    cta: "Quero aprender a anunciar",
+      "Método completo para validar sua oferta, estruturar sua operação e crescer sua base com tráfego, conteúdo intencional e funil. Ideal para quem quer aplicar no próprio ritmo e conquistar previsibilidade sem depender de agência.",
+    cta: "Quero acessar o Impulsione",
     href: "https://pay.kiwify.com.br/O7BUYuq",
   },
-  consultoria: {
-    emoji: "🎯",
-    title: "Consultoria Individual",
-    tag: "Consultoria",
+  enxuta: {
+    emoji: "🧭",
+    title: "Consultoria Enxuta + Impulsione",
+    tag: "Consultoria + Método",
     description:
-      "Um plano estratégico feito para o seu negócio. Analiso seu conteúdo, posicionamento, anúncios e estratégia de crescimento para mostrar exatamente o que fazer para vender mais e crescer com previsibilidade. Você sai com direcionamento claro, plano de ação e acompanhamento.",
-    cta: "Quero uma estratégia personalizada",
+      "Para quem já tem operação rodando e precisa de direcionamento personalizado para crescer mais rápido. Consultoria focada em crescimento de base + acesso completo ao Impulsione para executar com método. Você sai com clareza de gargalos e plano de ação.",
+    cta: "Quero a Consultoria Enxuta + Impulsione",
+    href: "https://form.respondi.app/MYzZhNbv",
+  },
+  completa: {
+    emoji: "🎯",
+    title: "Consultoria Completa",
+    tag: "Consultoria 360°",
+    description:
+      "Imersão estratégica 100% personalizada na sua realidade: oferta, posicionamento, funil, vendas, anúncios e estrutura. Para negócios que já faturam e querem escalar com previsibilidade, lucro e organização. Plano de ação detalhado com acompanhamento.",
+    cta: "Quero a Consultoria Completa",
     href: "https://form.respondi.app/MYzZhNbv",
   },
   gestao: {
@@ -78,62 +87,105 @@ const SERVICES: Record<
   },
 };
 
-type Step =
-  | { kind: "start" }
-  | { kind: "q"; id: string }
-  | { kind: "lead"; service: ServiceKey }
-  | { kind: "result"; service: ServiceKey };
+type StageKey = "comecando" | "depende_de_mim" | "travada" | "escalar";
+type GargaloKey = "atrair" | "vender" | "processos" | "estrategia" | "delegar";
+type FormatoKey = "ritmo" | "orientacao" | "completa" | "delegar";
 
-type Option = { label: string; next: Step };
-
-const FLOW: Record<string, { question: string; options: Option[] }> = {
-  root: {
-    question: "Qual é o seu principal objetivo neste momento para o seu negócio?",
-    options: [
-      { label: "🚀 Quero aprender a anunciar", next: { kind: "q", id: "aprender" } },
-      { label: "🎯 Quero uma estratégia personalizada", next: { kind: "q", id: "estrategia" } },
-      { label: "📈 Quero que alguém gerencie meus anúncios", next: { kind: "q", id: "gestao" } },
-      { label: "⚙️ Quero automatizar minha empresa", next: { kind: "q", id: "automatizar" } },
-    ],
-  },
-  aprender: {
-    question: "Qual o seu nível de experiência com anúncios pagos?",
-    options: [
-      { label: "Sou iniciante / quero fazer por conta própria", next: { kind: "lead", service: "impulsione" } },
-      { label: "Já faço, mas quero otimizar / não tenho tempo", next: { kind: "lead", service: "gestao" } },
-    ],
-  },
-  estrategia: {
-    question: "Você busca um plano de ação detalhado ou uma gestão completa?",
-    options: [
-      { label: "Preciso de um plano e acompanhamento para implementar", next: { kind: "lead", service: "consultoria" } },
-      { label: "Quero delegar a execução e focar no meu negócio", next: { kind: "lead", service: "gestao" } },
-    ],
-  },
-  gestao: {
-    question: "Qual o faturamento médio mensal do seu negócio?",
-    options: [
-      { label: "Até R$ 5 mil", next: { kind: "lead", service: "impulsione" } },
-      { label: "Entre R$ 5 mil e R$ 20 mil", next: { kind: "lead", service: "consultoria" } },
-      { label: "Acima de R$ 20 mil", next: { kind: "lead", service: "gestao" } },
-    ],
-  },
-  automatizar: {
-    question: "Qual o principal desafio que a automação resolveria?",
-    options: [
-      { label: "Reduzir processos manuais e aumentar produtividade", next: { kind: "lead", service: "xdigital" } },
-      { label: "Melhorar atendimento e qualificação de leads", next: { kind: "lead", service: "xdigital" } },
-    ],
-  },
+type Answers = {
+  stage?: StageKey;
+  gargalo?: GargaloKey;
+  formato?: FormatoKey;
 };
 
-function BioLink() {
-  const [history, setHistory] = useState<Step[]>([{ kind: "start" }]);
-  const step = history[history.length - 1];
+type Step =
+  | { kind: "start" }
+  | { kind: "q1" }
+  | { kind: "q2" }
+  | { kind: "q3" }
+  | { kind: "lead" }
+  | { kind: "result" };
 
-  const go = (s: Step) => setHistory((h) => [...h, s]);
-  const back = () => setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
-  const restart = () => setHistory([{ kind: "start" }]);
+const STAGE_OPTIONS: { value: StageKey; label: string }[] = [
+  { value: "comecando", label: "Estou começando agora e ainda não vendo de forma consistente." },
+  { value: "depende_de_mim", label: "Já vendo, mas tudo depende de mim." },
+  { value: "travada", label: "Tenho clientes e faturamento, mas sinto que travei para crescer." },
+  { value: "escalar", label: "Quero escalar meu negócio com estratégia." },
+];
+
+const GARGALO_OPTIONS: { value: GargaloKey; label: string }[] = [
+  { value: "atrair", label: "Atrair clientes / crescer minha base." },
+  { value: "vender", label: "Vender mais e converter melhor." },
+  { value: "processos", label: "Organizar processos e operação." },
+  { value: "estrategia", label: "Ter estratégia clara para escalar." },
+  { value: "delegar", label: "Delegar a execução dos anúncios." },
+];
+
+const FORMATO_OPTIONS: { value: FormatoKey; label: string }[] = [
+  { value: "ritmo", label: "Quero aprender e aplicar no meu próprio ritmo." },
+  { value: "orientacao", label: "Quero orientação personalizada junto com um método pronto." },
+  { value: "completa", label: "Quero uma consultoria completa, 100% focada na minha realidade." },
+  { value: "delegar", label: "Quero delegar a execução e focar no meu negócio." },
+];
+
+function recommend(a: Required<Answers>): { service: ServiceKey; reason: string } {
+  const stageText: Record<StageKey, string> = {
+    comecando: "você está no início e ainda construindo consistência",
+    depende_de_mim: "seu negócio já vende, mas hoje depende muito de você",
+    travada: "você já tem clientes e faturamento, mas sente que travou para crescer",
+    escalar: "você quer escalar com estratégia e previsibilidade",
+  };
+  const gargaloText: Record<GargaloKey, string> = {
+    atrair: "o principal gargalo é atrair clientes e crescer a base",
+    vender: "o desafio central é vender mais e converter melhor",
+    processos: "o ponto a destravar é organização e processos",
+    estrategia: "falta uma estratégia clara para escalar",
+    delegar: "você quer delegar a execução dos anúncios",
+  };
+
+  let service: ServiceKey;
+  if (a.formato === "delegar") {
+    service = a.gargalo === "processos" ? "xdigital" : "gestao";
+  } else if (a.formato === "completa") {
+    service = "completa";
+  } else if (a.formato === "ritmo") {
+    service = "impulsione";
+  } else {
+    // orientacao
+    service = a.stage === "comecando" ? "impulsione" : "enxuta";
+  }
+
+  const why: Record<ServiceKey, string> = {
+    impulsione:
+      "o Impulsione é o caminho certo: você terá o método completo para aplicar no seu ritmo, com clareza de execução e sem precisar de agência.",
+    enxuta:
+      "a Consultoria Enxuta + Impulsione faz mais sentido: você terá orientação personalizada para destravar o crescimento da sua base e o método para executar com consistência.",
+    completa:
+      "a Consultoria Completa é a melhor escolha: uma imersão estratégica 100% focada na sua realidade, com plano de ação para escalar com previsibilidade e lucro.",
+    gestao:
+      "a Gestão de Tráfego entrega o que você precisa: estratégia, execução e otimização das campanhas para transformar anúncios em vendas previsíveis.",
+    xdigital:
+      "a XDigital Mídia é a indicação: automações, integrações e BI para reduzir processos manuais e dar escala operacional ao seu negócio.",
+  };
+
+  const reason = `Pelas suas respostas, percebi que ${stageText[a.stage]} e que ${gargaloText[a.gargalo]}. Por isso, ${why[service]}`;
+  return { service, reason };
+}
+
+function BioLink() {
+  const [step, setStep] = useState<Step>({ kind: "start" });
+  const [answers, setAnswers] = useState<Answers>({});
+
+  const restart = () => {
+    setAnswers({});
+    setStep({ kind: "start" });
+  };
+
+  const reco = useMemo(() => {
+    if (answers.stage && answers.gargalo && answers.formato) {
+      return recommend(answers as Required<Answers>);
+    }
+    return null;
+  }, [answers]);
 
   return (
     <main className="min-h-screen bg-background text-foreground font-sans">
@@ -141,27 +193,66 @@ function BioLink() {
         <Header />
 
         <section className="mt-8">
-          {step.kind === "start" && <StartCard onStart={() => go({ kind: "q", id: "root" })} />}
+          {step.kind === "start" && <StartCard onStart={() => setStep({ kind: "q1" })} />}
 
-          {step.kind === "q" && (
+          {step.kind === "q1" && (
             <QuestionCard
-              data={FLOW[step.id]}
-              onPick={go}
-              onBack={history.length > 1 ? back : undefined}
+              step={1}
+              total={3}
+              intro="Antes de indicar o melhor caminho, preciso entender o seu momento. São 3 perguntas rápidas — menos de 1 minuto."
+              question="Qual dessas situações mais parece com você hoje?"
+              options={STAGE_OPTIONS.map((o) => ({ label: o.label, value: o.value }))}
+              onPick={(v) => {
+                setAnswers((a) => ({ ...a, stage: v as StageKey }));
+                setStep({ kind: "q2" });
+              }}
             />
           )}
 
-          {step.kind === "lead" && (
+          {step.kind === "q2" && (
+            <QuestionCard
+              step={2}
+              total={3}
+              question="Se eu pudesse resolver apenas UMA coisa no seu negócio agora, qual seria?"
+              options={GARGALO_OPTIONS.map((o) => ({ label: o.label, value: o.value }))}
+              onPick={(v) => {
+                setAnswers((a) => ({ ...a, gargalo: v as GargaloKey }));
+                setStep({ kind: "q3" });
+              }}
+              onBack={() => setStep({ kind: "q1" })}
+            />
+          )}
+
+          {step.kind === "q3" && (
+            <QuestionCard
+              step={3}
+              total={3}
+              question="Como você prefere evoluir a partir de agora?"
+              options={FORMATO_OPTIONS.map((o) => ({ label: o.label, value: o.value }))}
+              onPick={(v) => {
+                setAnswers((a) => ({ ...a, formato: v as FormatoKey }));
+                setStep({ kind: "lead" });
+              }}
+              onBack={() => setStep({ kind: "q2" })}
+            />
+          )}
+
+          {step.kind === "lead" && reco && (
             <LeadCard
-              service={SERVICES[step.service]}
-              onSkip={() => go({ kind: "result", service: step.service })}
-              onSubmit={() => go({ kind: "result", service: step.service })}
-              onBack={back}
+              service={SERVICES[reco.service]}
+              reason={reco.reason}
+              onSkip={() => setStep({ kind: "result" })}
+              onSubmit={() => setStep({ kind: "result" })}
+              onBack={() => setStep({ kind: "q3" })}
             />
           )}
 
-          {step.kind === "result" && (
-            <ResultCard service={SERVICES[step.service]} onRestart={restart} />
+          {step.kind === "result" && reco && (
+            <ResultCard
+              service={SERVICES[reco.service]}
+              reason={reco.reason}
+              onRestart={restart}
+            />
           )}
         </section>
 
@@ -215,19 +306,20 @@ function StartCard({ onStart }: { onStart: () => void }) {
     <Card>
       <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-primary">
         <Sparkles className="h-4 w-4" />
-        Concierge inteligente
+        Diagnóstico estratégico
       </div>
       <h2 className="mt-3 font-serif text-2xl leading-tight sm:text-[26px]">
-        Vamos descobrir a solução ideal para você?
+        Vamos descobrir qual é o próximo passo certo para o seu negócio?
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Responda 2 perguntas rápidas e eu te direciono para o serviço certo no seu momento.
+        Antes de indicar qualquer solução, preciso entender o seu momento. São 3 perguntas rápidas
+        e em menos de 1 minuto eu te mostro o caminho ideal — baseado na sua realidade, não em regra fixa.
       </p>
       <button
         onClick={onStart}
         className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90 active:scale-[0.99]"
       >
-        Começar agora
+        Começar diagnóstico
         <ArrowRight className="h-4 w-4" />
       </button>
     </Card>
@@ -235,30 +327,54 @@ function StartCard({ onStart }: { onStart: () => void }) {
 }
 
 function QuestionCard({
-  data,
+  question,
+  options,
   onPick,
   onBack,
+  step,
+  total,
+  intro,
 }: {
-  data: { question: string; options: Option[] };
-  onPick: (s: Step) => void;
+  question: string;
+  options: { label: string; value: string }[];
+  onPick: (value: string) => void;
   onBack?: () => void;
+  step: number;
+  total: number;
+  intro?: string;
 }) {
   return (
     <Card>
-      {onBack && (
-        <button
-          onClick={onBack}
-          className="mb-3 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
-        >
-          <ArrowLeft className="h-3 w-3" /> Voltar
-        </button>
-      )}
-      <h2 className="font-serif text-xl leading-snug sm:text-2xl">{data.question}</h2>
-      <div className="mt-5 flex flex-col gap-2.5">
-        {data.options.map((opt) => (
+      <div className="flex items-center justify-between">
+        {onBack ? (
           <button
-            key={opt.label}
-            onClick={() => onPick(opt.next)}
+            onClick={onBack}
+            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-3 w-3" /> Voltar
+          </button>
+        ) : (
+          <span />
+        )}
+        <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+          {step} de {total}
+        </span>
+      </div>
+      <div className="mt-3 h-1 w-full rounded-full bg-secondary">
+        <div
+          className="h-full rounded-full bg-primary transition-all"
+          style={{ width: `${(step / total) * 100}%` }}
+        />
+      </div>
+      {intro && (
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{intro}</p>
+      )}
+      <h2 className="mt-4 font-serif text-xl leading-snug sm:text-2xl">{question}</h2>
+      <div className="mt-5 flex flex-col gap-2.5">
+        {options.map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => onPick(opt.value)}
             className="group flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-4 py-3.5 text-left text-sm font-medium transition hover:border-primary hover:bg-primary/5"
           >
             <span>{opt.label}</span>
@@ -272,11 +388,13 @@ function QuestionCard({
 
 function LeadCard({
   service,
+  reason,
   onSubmit,
   onSkip,
   onBack,
 }: {
   service: (typeof SERVICES)[ServiceKey];
+  reason: string;
   onSubmit: () => void;
   onSkip: () => void;
   onBack: () => void;
@@ -296,9 +414,10 @@ function LeadCard({
         <Check className="h-4 w-4" /> Recomendação encontrada
       </div>
       <h2 className="mt-2 font-serif text-2xl leading-snug">
-        {service.emoji} {service.title} é o caminho ideal para você.
+        {service.emoji} {service.title}
       </h2>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="mt-3 text-sm leading-relaxed text-foreground/80">{reason}</p>
+      <p className="mt-3 text-sm text-muted-foreground">
         Deixe seu contato para receber o direcionamento personalizado e condições exclusivas.
       </p>
       <form
@@ -380,9 +499,11 @@ function Field({
 
 function ResultCard({
   service,
+  reason,
   onRestart,
 }: {
   service: (typeof SERVICES)[ServiceKey];
+  reason: string;
   onRestart: () => void;
 }) {
   return (
@@ -393,7 +514,10 @@ function ResultCard({
       <h2 className="mt-2 font-serif text-2xl leading-snug">
         {service.emoji} {service.title}
       </h2>
-      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+      <p className="mt-3 text-sm leading-relaxed text-foreground/80">{reason}</p>
+      <div className="mt-4 rounded-xl bg-secondary/60 p-4">
+        <p className="text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+      </div>
       <a
         href={service.href}
         target="_blank"
@@ -407,7 +531,7 @@ function ResultCard({
         onClick={onRestart}
         className="mt-3 inline-flex w-full items-center justify-center text-xs text-muted-foreground hover:text-foreground"
       >
-        Refazer qualificação
+        Refazer diagnóstico
       </button>
     </Card>
   );
