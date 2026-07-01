@@ -290,7 +290,7 @@ function Header() {
           src={heroAsset.url}
           alt="Jessyca Barros"
           className="relative h-32 w-32 rounded-full object-cover shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-primary/20 sm:h-36 sm:w-36"
-          style={{ objectPosition: "50% 22%" }}
+          style={{ objectPosition: "50% 35%" }}
           loading="eager"
         />
       </div>
