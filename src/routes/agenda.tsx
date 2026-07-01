@@ -52,11 +52,10 @@ function AgendaPage() {
         <div className="mt-10 overflow-hidden rounded-[20px] border border-border/70 bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04),0_20px_50px_-30px_rgba(0,0,0,0.15)]">
           <iframe
             src={CALENDAR_SRC}
-            title="Agenda Google — Jessyca Barros"
-            className="h-[720px] w-full"
+            title="Agendar reunião — Jessyca Barros"
+            className="h-[600px] w-full"
             style={{ border: 0 }}
             frameBorder={0}
-            scrolling="no"
           />
         </div>
       </div>
