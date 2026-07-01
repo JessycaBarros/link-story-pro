@@ -51,11 +51,7 @@ const SERVICES: Record<
     message:
       "O melhor caminho para você neste momento é aprender a construir uma estratégia que continue funcionando mesmo sem depender de uma agência. O Impulsione foi criado exatamente para isso.",
     cta: "Quero acessar o Impulsione",
-    href: "https://pay.kiwify.com.br/O7BUYuq",
-    secondary: {
-      label: "Ver oferta alternativa",
-      href: "https://pay.kiwify.com.br/rubcahV",
-    },
+    href: "https://pay.kiwify.com.br/rubcahV",
   },
   diagnostico: {
     title: "Consultoria de Diagnóstico",
