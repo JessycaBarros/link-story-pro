@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Instagram, MessageCircle, ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
+import { Instagram, MessageCircle, ArrowRight, ArrowLeft, Check, Sparkles, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -255,7 +255,22 @@ function BioLink() {
         <Divider label="Conecte-se" />
         <SocialLinks />
 
-        <footer className="mt-12 text-center text-xs text-muted-foreground">
+        <Divider label="Sobre" />
+        <div className="rounded-2xl border border-border bg-card p-6 text-sm leading-relaxed text-foreground/80 sm:p-7">
+          <p className="font-serif text-lg italic text-foreground">
+            "Nem todo negócio precisa investir mais. Muitos só precisam da estratégia certa."
+          </p>
+          <p className="mt-3">
+            Sou <strong>Jessyca Barros</strong>, especialista em tráfego pago, crescimento
+            de negócios e performance. Desenvolvo estratégias que unem posicionamento,
+            anúncios e crescimento de audiência para transformar visibilidade em vendas.
+          </p>
+          <p className="mt-3 text-muted-foreground">
+            Meu objetivo é simples: fazer com que seu negócio seja encontrado pelas pessoas certas.
+          </p>
+        </div>
+
+        <footer className="mt-10 text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} Jessyca Barros. Todos os direitos reservados.
         </footer>
       </div>
@@ -582,6 +597,11 @@ function SocialLinks() {
       label: "WhatsApp",
       href: "https://wa.me/5500000000000",
       icon: MessageCircle,
+    },
+    {
+      label: "Agendar reunião",
+      href: "https://form.respondi.app/MYzZhNbv",
+      icon: Calendar,
     },
     {
       label: "Instagram",
