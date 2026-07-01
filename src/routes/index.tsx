@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Instagram, MessageCircle, ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
+import { Instagram, MessageCircle, ArrowRight, ArrowLeft, Check, Sparkles, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
   component: BioLink,
 });
 
-type ServiceKey = "impulsione" | "enxuta" | "completa" | "gestao" | "xdigital";
+type ServiceKey = "impulsione" | "consultoria" | "gestao" | "xdigital";
 
 const SERVICES: Record<
   ServiceKey,
@@ -45,26 +45,17 @@ const SERVICES: Record<
     title: "Impulsione",
     tag: "Curso",
     description:
-      "Método completo para validar sua oferta, estruturar sua operação e crescer sua base com tráfego, conteúdo intencional e funil. Ideal para quem quer aplicar no próprio ritmo e conquistar previsibilidade sem depender de agência.",
-    cta: "Quero acessar o Impulsione",
+      "Aprenda a anunciar no Instagram do jeito certo, sem depender de agência. Atraia seguidores qualificados, venda mais e crie campanhas estratégicas por conta própria. Ideal para quem está começando ou quer economizar na gestão de tráfego.",
+    cta: "Quero aprender a anunciar",
     href: "https://pay.kiwify.com.br/O7BUYuq",
   },
-  enxuta: {
-    emoji: "🧭",
-    title: "Consultoria Enxuta + Impulsione",
-    tag: "Consultoria + Método",
-    description:
-      "Para quem já tem operação rodando e precisa de direcionamento personalizado para crescer mais rápido. Consultoria focada em crescimento de base + acesso completo ao Impulsione para executar com método. Você sai com clareza de gargalos e plano de ação.",
-    cta: "Quero a Consultoria Enxuta + Impulsione",
-    href: "https://form.respondi.app/MYzZhNbv",
-  },
-  completa: {
+  consultoria: {
     emoji: "🎯",
-    title: "Consultoria Completa",
-    tag: "Consultoria 360°",
+    title: "Consultoria Individual",
+    tag: "Consultoria personalizada",
     description:
-      "Imersão estratégica 100% personalizada na sua realidade: oferta, posicionamento, funil, vendas, anúncios e estrutura. Para negócios que já faturam e querem escalar com previsibilidade, lucro e organização. Plano de ação detalhado com acompanhamento.",
-    cta: "Quero a Consultoria Completa",
+      "Um plano estratégico feito para o seu negócio. Analiso seu conteúdo, posicionamento, anúncios e estratégia de crescimento para mostrar exatamente o que fazer para vender mais e crescer com previsibilidade. Você sai com direcionamento claro, plano de ação e acompanhamento para acelerar resultados.",
+    cta: "Quero uma estratégia personalizada",
     href: "https://form.respondi.app/MYzZhNbv",
   },
   gestao: {
@@ -72,7 +63,7 @@ const SERVICES: Record<
     title: "Gestão de Tráfego",
     tag: "Serviço premium",
     description:
-      "Enquanto você cuida do seu negócio, eu cuido do crescimento. Planejo, crio, acompanho e otimizo suas campanhas para atrair clientes qualificados e transformar anúncios em vendas. Estratégia, análise de dados e decisões baseadas no que realmente gera resultado.",
+      "Enquanto você cuida do seu negócio, eu cuido do crescimento. Planejo, crio, acompanho e otimizo suas campanhas para atrair clientes qualificados e transformar anúncios em vendas. Muito além de apertar botões: estratégia, análise de dados e decisões baseadas no que realmente gera resultado. Ideal para empresas que querem escalar com previsibilidade.",
     cta: "Quero que alguém gerencie meus anúncios",
     href: "https://form.respondi.app/eGQCKlLh",
   },
@@ -81,15 +72,15 @@ const SERVICES: Record<
     title: "XDigital Mídia",
     tag: "IA + Automação",
     description:
-      "Tecnologia para empresas que querem crescer com eficiência. Desenvolvemos automações, dashboards (BI), integrações, sistemas personalizados e soluções inteligentes para reduzir processos manuais e aumentar a produtividade da sua empresa.",
+      "Tecnologia para empresas que querem crescer com eficiência. Desenvolvemos automações, dashboards (BI), integrações, sistemas personalizados e soluções inteligentes para reduzir processos manuais e aumentar a produtividade da sua empresa. Menos operação. Mais estratégia.",
     cta: "Quero automatizar minha empresa",
     href: "https://form.respondi.app/PotXEtbz",
   },
 };
 
 type StageKey = "comecando" | "depende_de_mim" | "travada" | "escalar";
-type GargaloKey = "atrair" | "vender" | "processos" | "estrategia" | "delegar";
-type FormatoKey = "ritmo" | "orientacao" | "completa" | "delegar";
+type GargaloKey = "atrair" | "vender" | "processos" | "estrategia" | "nao_sei";
+type FormatoKey = "ritmo" | "orientacao";
 
 type Answers = {
   stage?: StageKey;
@@ -113,18 +104,16 @@ const STAGE_OPTIONS: { value: StageKey; label: string }[] = [
 ];
 
 const GARGALO_OPTIONS: { value: GargaloKey; label: string }[] = [
-  { value: "atrair", label: "Atrair clientes / crescer minha base." },
-  { value: "vender", label: "Vender mais e converter melhor." },
-  { value: "processos", label: "Organizar processos e operação." },
-  { value: "estrategia", label: "Ter estratégia clara para escalar." },
-  { value: "delegar", label: "Delegar a execução dos anúncios." },
+  { value: "atrair", label: "Não consigo atrair clientes." },
+  { value: "vender", label: "Não sei vender." },
+  { value: "processos", label: "Não consigo organizar meus processos." },
+  { value: "estrategia", label: "Tenho clientes, mas falta estratégia para escalar." },
+  { value: "nao_sei", label: "Não sei exatamente onde está o problema." },
 ];
 
 const FORMATO_OPTIONS: { value: FormatoKey; label: string }[] = [
-  { value: "ritmo", label: "Quero aprender e aplicar no meu próprio ritmo." },
-  { value: "orientacao", label: "Quero orientação personalizada junto com um método pronto." },
-  { value: "completa", label: "Quero uma consultoria completa, 100% focada na minha realidade." },
-  { value: "delegar", label: "Quero delegar a execução e focar no meu negócio." },
+  { value: "ritmo", label: "Quero aprender e aplicar no meu ritmo." },
+  { value: "orientacao", label: "Quero alguém analisando meu caso e dizendo exatamente o que fazer." },
 ];
 
 function recommend(a: Required<Answers>): { service: ServiceKey; reason: string } {
@@ -139,28 +128,32 @@ function recommend(a: Required<Answers>): { service: ServiceKey; reason: string 
     vender: "o desafio central é vender mais e converter melhor",
     processos: "o ponto a destravar é organização e processos",
     estrategia: "falta uma estratégia clara para escalar",
-    delegar: "você quer delegar a execução dos anúncios",
+    nao_sei: "ainda não está claro onde está o principal gargalo",
   };
 
   let service: ServiceKey;
-  if (a.formato === "delegar") {
-    service = a.gargalo === "processos" ? "xdigital" : "gestao";
-  } else if (a.formato === "completa") {
-    service = "completa";
-  } else if (a.formato === "ritmo") {
+  if (a.formato === "ritmo") {
+    // Autonomia: método para aplicar sozinha
     service = "impulsione";
   } else {
-    // orientacao
-    service = a.stage === "comecando" ? "impulsione" : "enxuta";
+    // orientacao: alguém analisa e diz o que fazer
+    if (a.gargalo === "processos" && (a.stage === "escalar" || a.stage === "travada")) {
+      service = "xdigital";
+    } else if (
+      a.gargalo === "atrair" &&
+      (a.stage === "depende_de_mim" || a.stage === "travada" || a.stage === "escalar")
+    ) {
+      service = "gestao";
+    } else {
+      service = "consultoria";
+    }
   }
 
   const why: Record<ServiceKey, string> = {
     impulsione:
-      "o Impulsione é o caminho certo: você terá o método completo para aplicar no seu ritmo, com clareza de execução e sem precisar de agência.",
-    enxuta:
-      "a Consultoria Enxuta + Impulsione faz mais sentido: você terá orientação personalizada para destravar o crescimento da sua base e o método para executar com consistência.",
-    completa:
-      "a Consultoria Completa é a melhor escolha: uma imersão estratégica 100% focada na sua realidade, com plano de ação para escalar com previsibilidade e lucro.",
+      "o Impulsione é o caminho certo: você terá o método completo para estruturar sua operação, validar sua oferta e atrair clientes qualificados aplicando no seu ritmo — sem depender de agência.",
+    consultoria:
+      "a Consultoria Individual é a melhor escolha: um plano estratégico feito para o seu momento, identificando gargalos e mostrando exatamente o que fazer para vender mais e crescer com previsibilidade.",
     gestao:
       "a Gestão de Tráfego entrega o que você precisa: estratégia, execução e otimização das campanhas para transformar anúncios em vendas previsíveis.",
     xdigital:
@@ -213,7 +206,7 @@ function BioLink() {
             <QuestionCard
               step={2}
               total={3}
-              question="Se eu pudesse resolver apenas UMA coisa no seu negócio agora, qual seria?"
+              question="Hoje, o que mais impede seu negócio de crescer?"
               options={GARGALO_OPTIONS.map((o) => ({ label: o.label, value: o.value }))}
               onPick={(v) => {
                 setAnswers((a) => ({ ...a, gargalo: v as GargaloKey }));
@@ -262,7 +255,22 @@ function BioLink() {
         <Divider label="Conecte-se" />
         <SocialLinks />
 
-        <footer className="mt-12 text-center text-xs text-muted-foreground">
+        <Divider label="Sobre" />
+        <div className="rounded-2xl border border-border bg-card p-6 text-sm leading-relaxed text-foreground/80 sm:p-7">
+          <p className="font-serif text-lg italic text-foreground">
+            "Nem todo negócio precisa investir mais. Muitos só precisam da estratégia certa."
+          </p>
+          <p className="mt-3">
+            Sou <strong>Jessyca Barros</strong>, especialista em tráfego pago, crescimento
+            de negócios e performance. Desenvolvo estratégias que unem posicionamento,
+            anúncios e crescimento de audiência para transformar visibilidade em vendas.
+          </p>
+          <p className="mt-3 text-muted-foreground">
+            Meu objetivo é simples: fazer com que seu negócio seja encontrado pelas pessoas certas.
+          </p>
+        </div>
+
+        <footer className="mt-10 text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} Jessyca Barros. Todos os direitos reservados.
         </footer>
       </div>
@@ -589,6 +597,11 @@ function SocialLinks() {
       label: "WhatsApp",
       href: "https://wa.me/5500000000000",
       icon: MessageCircle,
+    },
+    {
+      label: "Agendar reunião",
+      href: "https://form.respondi.app/MYzZhNbv",
+      icon: Calendar,
     },
     {
       label: "Instagram",
