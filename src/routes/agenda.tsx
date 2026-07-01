@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 const CALENDAR_SRC =
-  "https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FSao_Paulo&showPrint=0&src=Y29udGF0by5qZXNzeWNhYmFycm9zQGdtYWlsLmNvbQ&src=NmJmOGJiODY1MzhmNWYwYjgxZjQ2NzViY2FiZmI2YmUzZWI5MDdhMmY1YTA4MGIxMDJmMTY0MTg5NWM2Mzc5NEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NzhjMDE5Y2E0ZDQ4Y2Q3ZWM5OTJmOGNkZjUzMDIzNjc2NGZjMWJhYjY4YWI3MjEyMzdiZGQ2Mzk3MDE0YmU3M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZTIxZjU2M2Y5YmY0MjVmNGExYzE3MjQ4YWIzMzAxMDFlZGNjM2JhN2U5NzAzZGVkZjkyNzk3YTlhZTFmYTE0MkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=OGQwOTc2MTRmZWIzY2IzMjRhNDBhMzQyZjliNDg5MzkzZmEwMWI3YzFjZGYwY2ZjMTMxY2QxMTU4ZjFlZjgwYUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=MDcyNmNlYzBkNTEyMjU1MWM1NmE0YzE3OGQxMzk5ZmMxYzVhMDM0MDNkYWE5ODg3YmY4MTk5MGE0NGYzMTgyMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NTdmMmRiYjQ5MDQ0ZmFiYWY2YzI5ODczYzllZGI4YzdhYmU0ZmZhY2ZmNmY2NDIwNjRmYTA2NzA5ZWY3OTYwZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZGUzMDE4ZTRkZGNkNDI0MGI5NzI4MmI1ZTExODEyZjljOWM5Mjk5YmU2MzMwNDEzNDZhOTVjOTA3MzU0ZDcxN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23fe61a2&color=%23ff00e1&color=%239e69af&color=%23e67c73&color=%23d50000&color=%23f6bf26&color=%234285f4&color=%237986cb";
+  "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2A-j1jcksAtKqitswPmBykkpirUXuA9dFI5-worRs5zPNcCFy3EjtWl2DkWuPM7Os6W46mCxAZ?gv=true";
 
 export const Route = createFileRoute("/agenda")({
   head: () => ({
