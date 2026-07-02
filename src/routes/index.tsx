@@ -626,9 +626,11 @@ function Field({
 
 function ResultCard({
   service,
+  serviceKey,
   onRestart,
 }: {
   service: (typeof SERVICES)[ServiceKey];
+  serviceKey: ServiceKey;
   onRestart: () => void;
 }) {
   return (
@@ -645,6 +647,7 @@ function ResultCard({
         href={service.href}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackEvent("service_click", { service: serviceKey, from: "result" })}
         className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-4 text-[13px] font-medium uppercase tracking-[0.16em] text-primary-foreground transition hover:bg-primary/90"
       >
         {service.cta}
