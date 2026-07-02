@@ -26,10 +26,11 @@ export const Route = createFileRoute("/")({
 
 type ServiceKey =
   | "impulsione"
-  | "diagnostico"
-  | "estrategica"
+  | "express"
+  | "personalizada"
   | "gestao"
-  | "xdigital";
+  | "xdigital_automacoes"
+  | "xdigital_sistemas";
 
 const SERVICES: Record<
   ServiceKey,
@@ -47,64 +48,82 @@ const SERVICES: Record<
     title: "Impulsione",
     tag: "Método",
     description:
-      "O método completo para você anunciar no Instagram, atrair seguidores qualificados e transformar conteúdo em vendas — sem depender de agência.",
+      "O método completo para validar sua oferta, atrair os primeiros clientes e fazer caixa — construindo uma base sólida para o seu negócio começar a vender de forma consistente.",
     message:
-      "O melhor caminho para você neste momento é aprender a construir uma estratégia que continue funcionando mesmo sem depender de uma agência. O Impulsione foi criado exatamente para isso.",
+      "O seu momento agora é criar tração e fazer caixa. O Impulsione foi desenhado para quem está começando ou ainda não vende de forma consistente — você aprende, aplica e cria uma base para crescer sem precisar terceirizar nada agora.",
     cta: "Quero acessar o Impulsione",
     href: "https://pay.kiwify.com.br/rubcahV",
   },
-  diagnostico: {
-    title: "Consultoria de Diagnóstico",
-    tag: "Diagnóstico personalizado",
+  express: {
+    title: "Consultoria Express",
+    tag: "Diagnóstico estratégico",
     description:
-      "Uma análise aprofundada do seu negócio para identificar o que realmente está impedindo o crescimento — com um plano de ação claro para os próximos passos.",
+      "Um mergulho rápido e estratégico no seu negócio para encontrar o gargalo real e sair com um plano de ação claro — sem precisar contratar acompanhamento longo.",
     message:
-      "Você não precisa terceirizar o marketing agora. Antes disso, precisa entender exatamente o que está impedindo seu crescimento. Vamos analisar seu negócio e construir um plano de ação personalizado.",
-    cta: "Quero meu diagnóstico",
+      "Você já validou que consegue vender, mas está travada e o faturamento ainda não decolou. Antes de investir em execução ou tráfego, precisamos identificar exatamente onde está o gargalo e destravar o crescimento com um plano objetivo.",
+    cta: "Quero minha Consultoria Express",
     href: "https://form.respondi.app/MYzZhNbv",
   },
-  estrategica: {
-    title: "Consultoria Estratégica",
-    tag: "Consultoria completa",
+  personalizada: {
+    title: "Consultoria Personalizada",
+    tag: "Acompanhamento estratégico",
     description:
-      "Imersão em posicionamento, conteúdo, anúncios, funil e estratégia para escalar o seu negócio com previsibilidade e consistência.",
+      "Acompanhamento estratégico completo: construção de oferta, funil de vendas, posicionamento e estruturação do negócio para você escalar com previsibilidade.",
     message:
-      "Seu negócio já está em um estágio em que pequenos ajustes geram grandes impactos. Nesta consultoria mergulhamos em posicionamento, conteúdo, anúncios, funil e estratégia para criar um plano de crescimento consistente.",
-    cta: "Quero uma estratégia personalizada",
+      "Você já vende, mas precisa estruturar oferta, funil e estratégia para escalar de verdade. Nesta consultoria construímos um plano estratégico completo e eu acompanho a implementação junto com você.",
+    cta: "Quero acompanhamento estratégico",
     href: "https://form.respondi.app/MYzZhNbv",
   },
   gestao: {
     title: "Gestão de Tráfego",
-    tag: "Serviço premium",
+    tag: "Aquisição de clientes",
     description:
-      "Um especialista assumindo integralmente a estratégia, execução e otimização dos seus anúncios para gerar crescimento previsível.",
+      "Estratégia, execução e otimização de campanhas para atrair mais clientes com previsibilidade — feita por quem entende o seu negócio como um todo, não só o anúncio.",
     message:
-      "Seu momento pede foco na estratégia do negócio enquanto um especialista assume toda a gestão dos anúncios para gerar crescimento previsível.",
+      "Sua oferta já é validada, o processo comercial funciona e agora você precisa de volume. Este é o momento de delegar os anúncios para um especialista e ganhar previsibilidade sem sobrecarregar sua rotina.",
     cta: "Quero delegar meus anúncios",
     href: "https://form.respondi.app/eGQCKlLh",
   },
-  xdigital: {
-    title: "XDigital Mídia",
-    tag: "Tecnologia & automação",
+  xdigital_automacoes: {
+    title: "XDigital · Automações",
+    tag: "IA, WhatsApp & atendimento",
     description:
-      "Automações, dashboards, integrações e sistemas sob medida para reduzir operação manual e liberar tempo para a estratégia.",
+      "Automatize atendimento, follow-up e CRM com IA e WhatsApp para economizar tempo, escalar operação e aumentar suas conversões.",
     message:
-      "O maior gargalo do seu negócio não é marketing. É estrutura. A XDigital Mídia desenvolve automações, dashboards, integrações e sistemas para que sua empresa cresça com mais eficiência.",
-    cta: "Quero estruturar meu negócio",
+      "Seu maior gargalo hoje é tempo. Você perde horas em atendimento manual e operação repetitiva. As automações da XDigital colocam IA, WhatsApp e CRM trabalhando por você — 24/7.",
+    cta: "Quero automatizar meu atendimento",
+    href: "https://form.respondi.app/nNtzMprL",
+  },
+  xdigital_sistemas: {
+    title: "XDigital · Sistemas Personalizados",
+    tag: "Tecnologia sob medida",
+    description:
+      "Desenvolvimento de sistemas internos, plataformas, dashboards, portais e softwares personalizados para digitalizar processos e escalar operações complexas.",
+    message:
+      "Sua empresa precisa de tecnologia sob medida — não uma ferramenta genérica adaptada. A XDigital desenvolve sistemas, dashboards e plataformas específicas para o seu negócio operar com eficiência real.",
+    cta: "Quero um sistema sob medida",
     href: "https://form.respondi.app/nNtzMprL",
   },
 };
 
 type StageKey = "comecando" | "depende_de_mim" | "travada" | "escalar";
 type GargaloKey = "atrair" | "conteudo" | "anuncios" | "processos" | "nao_sei";
-type FormaKey = "aprender" | "analisar" | "delegar";
-type InvestKey = "pouco" | "acompanhamento" | "executor" | "tecnologia";
+type SolucaoKey = "aprender" | "especialista" | "anuncios" | "automatizar" | "sistema";
+type FatKey =
+  | "0"
+  | "1_2"
+  | "3_5"
+  | "6_8"
+  | "9_10"
+  | "10_15"
+  | "20_30"
+  | "40_mais";
 
 type Answers = {
   stage?: StageKey;
   gargalo?: GargaloKey;
-  forma?: FormaKey;
-  invest?: InvestKey;
+  solucao?: SolucaoKey;
+  faturamento?: FatKey;
 };
 
 type Step =
@@ -132,39 +151,55 @@ const GARGALO_OPTIONS: { value: GargaloKey; label: string }[] = [
   { value: "nao_sei", label: "Não sei exatamente onde está o problema." },
 ];
 
-const FORMA_OPTIONS: { value: FormaKey; label: string }[] = [
-  { value: "aprender", label: "Quero aprender e fazer por conta própria." },
-  { value: "analisar", label: "Quero alguém analisando meu negócio e me dizendo exatamente o que fazer." },
-  { value: "delegar", label: "Quero delegar essa parte para um especialista." },
+const SOLUCAO_OPTIONS: { value: SolucaoKey; label: string }[] = [
+  { value: "aprender", label: "Aprender um método para estruturar e crescer meu negócio." },
+  { value: "especialista", label: "Um especialista analisando meu negócio e criando um plano estratégico." },
+  { value: "anuncios", label: "Atrair mais clientes com anúncios." },
+  { value: "automatizar", label: "Automatizar meu atendimento e processos." },
+  { value: "sistema", label: "Desenvolver um sistema personalizado para minha empresa." },
 ];
 
-const INVEST_OPTIONS: { value: InvestKey; label: string }[] = [
-  { value: "pouco", label: "Quero começar investindo pouco e aprender primeiro." },
-  { value: "acompanhamento", label: "Consigo investir em acompanhamento estratégico." },
-  { value: "executor", label: "Quero contratar alguém para executar essa parte." },
-  { value: "tecnologia", label: "Meu investimento será em estrutura, automações e tecnologia." },
+const FAT_OPTIONS: { value: FatKey; label: string }[] = [
+  { value: "0", label: "Ainda não faturo." },
+  { value: "1_2", label: "R$ 1k a R$ 2k por mês." },
+  { value: "3_5", label: "R$ 3k a R$ 5k por mês." },
+  { value: "6_8", label: "R$ 6k a R$ 8k por mês." },
+  { value: "9_10", label: "R$ 9k a R$ 10k por mês." },
+  { value: "10_15", label: "R$ 10k a R$ 15k por mês." },
+  { value: "20_30", label: "R$ 20k a R$ 30k por mês." },
+  { value: "40_mais", label: "Acima de R$ 40k por mês." },
 ];
+
+const LOW_REVENUE: FatKey[] = ["0", "1_2"];
+const MID_REVENUE: FatKey[] = ["3_5", "6_8"];
 
 function recommend(a: Required<Answers>): ServiceKey {
-  // Priority 1: technology / process bottleneck → XDigital
-  if (a.gargalo === "processos" || a.invest === "tecnologia") return "xdigital";
+  const low = LOW_REVENUE.includes(a.faturamento);
+  const mid = MID_REVENUE.includes(a.faturamento);
 
-  // Priority 2: delegar / contratar executor → Gestão
-  if (a.forma === "delegar" || a.invest === "executor") return "gestao";
+  // Q3 drives the recommendation; faturamento refina consultoria/gestão.
+  switch (a.solucao) {
+    case "aprender":
+      return "impulsione";
 
-  // Priority 3: aprender / investir pouco → Impulsione
-  if (a.forma === "aprender" || a.invest === "pouco") return "impulsione";
+    case "sistema":
+      return "xdigital_sistemas";
 
-  // Priority 4: analisar → Consultoria (diagnóstico vs estratégica)
-  if (a.forma === "analisar") {
-    if (a.stage === "travada" || a.stage === "escalar") return "estrategica";
-    return "diagnostico";
+    case "automatizar":
+      return "xdigital_automacoes";
+
+    case "anuncios":
+      // Sem verba para gestão profissional → aprender a anunciar primeiro.
+      if (low) return "impulsione";
+      return "gestao";
+
+    case "especialista":
+      // Faturamento baixo ou começando → Consultoria Express (diagnóstico rápido).
+      if (low || a.stage === "comecando") return "express";
+      // Faturamento médio + já vende, mas travada → Express também cabe.
+      if (mid && a.stage === "depende_de_mim") return "express";
+      return "personalizada";
   }
-
-  // Fallback: "não sei" onde está o problema → diagnóstico
-  if (a.gargalo === "nao_sei") return "diagnostico";
-
-  return "diagnostico";
 }
 
 function BioLink() {
@@ -177,7 +212,7 @@ function BioLink() {
   };
 
   const service = useMemo<ServiceKey | null>(() => {
-    if (answers.stage && answers.gargalo && answers.forma && answers.invest) {
+    if (answers.stage && answers.gargalo && answers.solucao && answers.faturamento) {
       return recommend(answers as Required<Answers>);
     }
     return null;
@@ -223,10 +258,10 @@ function BioLink() {
             <QuestionCard
               step={3}
               total={4}
-              question="Como você gostaria de resolver isso?"
-              options={FORMA_OPTIONS}
+              question="Qual solução você acredita que mais precisa hoje?"
+              options={SOLUCAO_OPTIONS}
               onPick={(v) => {
-                setAnswers((a) => ({ ...a, forma: v as FormaKey }));
+                setAnswers((a) => ({ ...a, solucao: v as SolucaoKey }));
                 setStep({ kind: "q4" });
               }}
               onBack={() => setStep({ kind: "q2" })}
@@ -237,10 +272,10 @@ function BioLink() {
             <QuestionCard
               step={4}
               total={4}
-              question="Hoje, qual investimento faz sentido para você?"
-              options={INVEST_OPTIONS}
+              question="Qual a média de faturamento mensal do seu negócio hoje?"
+              options={FAT_OPTIONS}
               onPick={(v) => {
-                setAnswers((a) => ({ ...a, invest: v as InvestKey }));
+                setAnswers((a) => ({ ...a, faturamento: v as FatKey }));
                 setStep({ kind: "analyzing" });
               }}
               onBack={() => setStep({ kind: "q3" })}
@@ -639,7 +674,6 @@ function SocialLinks() {
   const links: { label: string; href?: string; to?: string; external?: boolean }[] = [
     { label: "Conversar no WhatsApp", href: "https://wa.me/message/WK6EJVZ47QK7E1", external: true },
     { label: "Agendar reunião", to: "/agenda" },
-    { label: "Site oficial", href: "https://jessycabarros.com/", external: true },
   ];
   return (
     <div className="grid gap-3">
