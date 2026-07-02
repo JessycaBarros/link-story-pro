@@ -507,14 +507,20 @@ function AnalyzingCard({ onDone }: { onDone: () => void }) {
 
 function LeadCard({
   service,
+  serviceKey,
+  answers,
   onSubmit,
   onSkip,
 }: {
   service: (typeof SERVICES)[ServiceKey];
+  serviceKey: ServiceKey;
+  answers: Required<Answers>;
   onSubmit: () => void;
   onSkip: () => void;
 }) {
   const [form, setForm] = useState({ name: "", whatsapp: "", email: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const valid = form.name.trim() && form.whatsapp.trim() && form.email.trim();
 
   return (
@@ -530,9 +536,26 @@ function LeadCard({
       </p>
       <form
         className="mt-5 flex flex-col gap-3"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          if (!valid) return;
+          if (!valid || submitting) return;
+          setSubmitting(true);
+          setError(null);
+          const { error } = await submitLead({
+            name: form.name.trim(),
+            whatsapp: form.whatsapp.trim(),
+            email: form.email.trim(),
+            stage: answers.stage,
+            gargalo: answers.gargalo,
+            solucao: answers.solucao,
+            faturamento: answers.faturamento,
+            recommended_service: serviceKey,
+          });
+          setSubmitting(false);
+          if (error) {
+            setError("Não foi possível enviar. Tente novamente.");
+            return;
+          }
           onSubmit();
         }}
       >
@@ -553,11 +576,12 @@ function LeadCard({
         />
         <button
           type="submit"
-          disabled={!valid}
+          disabled={!valid || submitting}
           className="mt-3 inline-flex items-center justify-center rounded-full bg-primary px-6 py-4 text-[13px] font-medium uppercase tracking-[0.16em] text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
         >
-          Ver minha recomendação
+          {submitting ? "Enviando..." : "Ver minha recomendação"}
         </button>
+        {error && <p className="text-xs text-destructive">{error}</p>}
         <button
           type="button"
           onClick={onSkip}
