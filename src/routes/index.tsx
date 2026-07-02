@@ -49,7 +49,7 @@ const SERVICES: Record<
     title: "Impulsione",
     tag: "Método",
     description:
-      "O método completo para validar sua oferta, atrair os primeiros clientes e fazer caixa — construindo uma base sólida para o seu negócio começar a vender de forma consistente.",
+      "O método completo para validar sua oferta, atrair os primeiros clientes e fazer caixa — construindo uma base sólida para o seu negócio começar a vender de forma consistente. Método gravado, dividido por módulos. Você aprende de forma prática a criar seus próprios anúncios e fazer caixa. Sem depender de gestor.",
     message:
       "O seu momento agora é criar tração e fazer caixa. O Impulsione foi desenhado para quem está começando ou ainda não vende de forma consistente — você aprende, aplica e cria uma base para crescer sem precisar terceirizar nada agora.",
     cta: "Quero acessar o Impulsione",
@@ -59,7 +59,7 @@ const SERVICES: Record<
     title: "Consultoria Express",
     tag: "Diagnóstico estratégico",
     description:
-      "Um mergulho rápido e estratégico no seu negócio para encontrar o gargalo real e sair com um plano de ação claro — sem precisar contratar acompanhamento longo.",
+      "Um mergulho rápido e estratégico no seu negócio para encontrar o gargalo real e sair com um plano de ação claro — sem precisar contratar acompanhamento longo. Em um encontro, você vai aprender a crescer o seu perfil através do tráfego, atraindo potenciais clientes todo santo dia, aprendendo a usar seus próprios conteúdos como um funil. Ganha acesso ao impulsione.",
     message:
       "Você já validou que consegue vender, mas está travada e o faturamento ainda não decolou. Antes de investir em execução ou tráfego, precisamos identificar exatamente onde está o gargalo e destravar o crescimento com um plano objetivo.",
     cta: "Quero minha Consultoria Express",
@@ -683,7 +683,10 @@ function Divider({ label }: { label: string }) {
 }
 
 function ServiceGrid() {
-  const list = useMemo(() => Object.values(SERVICES), []);
+  const list = useMemo(
+    () => [SERVICES.gestao, SERVICES.impulsione, SERVICES.express, SERVICES.personalizada, SERVICES.xdigital_automacoes, SERVICES.xdigital_sistemas],
+    [],
+  );
   return (
     <div className="grid gap-4">
       {list.map((s) => (
