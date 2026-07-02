@@ -14,16 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          created_at: string
+          email: string
+          faturamento: string | null
+          gargalo: string | null
+          id: string
+          name: string
+          recommended_service: string | null
+          referrer: string | null
+          session_id: string | null
+          solucao: string | null
+          stage: string | null
+          user_agent: string | null
+          whatsapp: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          faturamento?: string | null
+          gargalo?: string | null
+          id?: string
+          name: string
+          recommended_service?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          solucao?: string | null
+          stage?: string | null
+          user_agent?: string | null
+          whatsapp: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          faturamento?: string | null
+          gargalo?: string | null
+          id?: string
+          name?: string
+          recommended_service?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          solucao?: string | null
+          stage?: string | null
+          user_agent?: string | null
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      page_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: number
+          meta: Json | null
+          path: string | null
+          referrer: string | null
+          session_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: number
+          meta?: Json | null
+          path?: string | null
+          referrer?: string | null
+          session_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: number
+          meta?: Json | null
+          path?: string | null
+          referrer?: string | null
+          session_id?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +254,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
