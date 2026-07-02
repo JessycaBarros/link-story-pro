@@ -22,7 +22,7 @@ export async function trackEvent(
       session_id: getSessionId(),
       path: window.location.pathname,
       referrer: document.referrer || null,
-      meta: meta ?? null,
+      meta: (meta ?? null) as never,
     });
   } catch {
     /* silent */
