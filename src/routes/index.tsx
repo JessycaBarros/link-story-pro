@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import heroAsset from "@/assets/jessyca-hero.jpg.asset.json";
 import aboutAsset from "@/assets/jessyca-about.png.asset.json";
+import { submitLead, trackEvent } from "@/lib/analytics";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -206,6 +207,10 @@ function BioLink() {
   const [step, setStep] = useState<Step>({ kind: "start" });
   const [answers, setAnswers] = useState<Answers>({});
 
+  useEffect(() => {
+    trackEvent("pageview");
+  }, []);
+
   const restart = () => {
     setAnswers({});
     setStep({ kind: "start" });
@@ -224,7 +229,14 @@ function BioLink() {
         <Header />
 
         <section className="mt-10">
-          {step.kind === "start" && <StartCard onStart={() => setStep({ kind: "q1" })} />}
+          {step.kind === "start" && (
+            <StartCard
+              onStart={() => {
+                trackEvent("diagnostic_start");
+                setStep({ kind: "q1" });
+              }}
+            />
+          )}
 
           {step.kind === "q1" && (
             <QuestionCard
@@ -275,7 +287,12 @@ function BioLink() {
               question="Qual a média de faturamento mensal do seu negócio hoje?"
               options={FAT_OPTIONS}
               onPick={(v) => {
-                setAnswers((a) => ({ ...a, faturamento: v as FatKey }));
+                const next = { ...answers, faturamento: v as FatKey } as Required<Answers>;
+                setAnswers(next);
+                trackEvent("diagnostic_complete", {
+                  ...next,
+                  recommended: recommend(next),
+                });
                 setStep({ kind: "analyzing" });
               }}
               onBack={() => setStep({ kind: "q3" })}
@@ -289,13 +306,19 @@ function BioLink() {
           {step.kind === "lead" && service && (
             <LeadCard
               service={SERVICES[service]}
+              serviceKey={service}
+              answers={answers as Required<Answers>}
               onSkip={() => setStep({ kind: "result" })}
               onSubmit={() => setStep({ kind: "result" })}
             />
           )}
 
           {step.kind === "result" && service && (
-            <ResultCard service={SERVICES[service]} onRestart={restart} />
+            <ResultCard
+              service={SERVICES[service]}
+              serviceKey={service}
+              onRestart={restart}
+            />
           )}
         </section>
 
@@ -484,14 +507,20 @@ function AnalyzingCard({ onDone }: { onDone: () => void }) {
 
 function LeadCard({
   service,
+  serviceKey,
+  answers,
   onSubmit,
   onSkip,
 }: {
   service: (typeof SERVICES)[ServiceKey];
+  serviceKey: ServiceKey;
+  answers: Required<Answers>;
   onSubmit: () => void;
   onSkip: () => void;
 }) {
   const [form, setForm] = useState({ name: "", whatsapp: "", email: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const valid = form.name.trim() && form.whatsapp.trim() && form.email.trim();
 
   return (
@@ -507,9 +536,26 @@ function LeadCard({
       </p>
       <form
         className="mt-5 flex flex-col gap-3"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          if (!valid) return;
+          if (!valid || submitting) return;
+          setSubmitting(true);
+          setError(null);
+          const { error } = await submitLead({
+            name: form.name.trim(),
+            whatsapp: form.whatsapp.trim(),
+            email: form.email.trim(),
+            stage: answers.stage,
+            gargalo: answers.gargalo,
+            solucao: answers.solucao,
+            faturamento: answers.faturamento,
+            recommended_service: serviceKey,
+          });
+          setSubmitting(false);
+          if (error) {
+            setError("Não foi possível enviar. Tente novamente.");
+            return;
+          }
           onSubmit();
         }}
       >
@@ -530,11 +576,12 @@ function LeadCard({
         />
         <button
           type="submit"
-          disabled={!valid}
+          disabled={!valid || submitting}
           className="mt-3 inline-flex items-center justify-center rounded-full bg-primary px-6 py-4 text-[13px] font-medium uppercase tracking-[0.16em] text-primary-foreground transition hover:bg-primary/90 disabled:opacity-50"
         >
-          Ver minha recomendação
+          {submitting ? "Enviando..." : "Ver minha recomendação"}
         </button>
+        {error && <p className="text-xs text-destructive">{error}</p>}
         <button
           type="button"
           onClick={onSkip}
@@ -579,9 +626,11 @@ function Field({
 
 function ResultCard({
   service,
+  serviceKey,
   onRestart,
 }: {
   service: (typeof SERVICES)[ServiceKey];
+  serviceKey: ServiceKey;
   onRestart: () => void;
 }) {
   return (
@@ -598,6 +647,7 @@ function ResultCard({
         href={service.href}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackEvent("service_click", { service: serviceKey, from: "result" })}
         className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-4 text-[13px] font-medium uppercase tracking-[0.16em] text-primary-foreground transition hover:bg-primary/90"
       >
         {service.cta}
