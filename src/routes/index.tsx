@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import heroAsset from "@/assets/jessyca-hero.jpg.asset.json";
 import aboutAsset from "@/assets/jessyca-about.png.asset.json";
+import { submitLead, trackEvent } from "@/lib/analytics";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -206,6 +207,10 @@ function BioLink() {
   const [step, setStep] = useState<Step>({ kind: "start" });
   const [answers, setAnswers] = useState<Answers>({});
 
+  useEffect(() => {
+    trackEvent("pageview");
+  }, []);
+
   const restart = () => {
     setAnswers({});
     setStep({ kind: "start" });
@@ -224,7 +229,14 @@ function BioLink() {
         <Header />
 
         <section className="mt-10">
-          {step.kind === "start" && <StartCard onStart={() => setStep({ kind: "q1" })} />}
+          {step.kind === "start" && (
+            <StartCard
+              onStart={() => {
+                trackEvent("diagnostic_start");
+                setStep({ kind: "q1" });
+              }}
+            />
+          )}
 
           {step.kind === "q1" && (
             <QuestionCard
@@ -275,7 +287,12 @@ function BioLink() {
               question="Qual a média de faturamento mensal do seu negócio hoje?"
               options={FAT_OPTIONS}
               onPick={(v) => {
-                setAnswers((a) => ({ ...a, faturamento: v as FatKey }));
+                const next = { ...answers, faturamento: v as FatKey } as Required<Answers>;
+                setAnswers(next);
+                trackEvent("diagnostic_complete", {
+                  ...next,
+                  recommended: recommend(next),
+                });
                 setStep({ kind: "analyzing" });
               }}
               onBack={() => setStep({ kind: "q3" })}
