@@ -306,13 +306,19 @@ function BioLink() {
           {step.kind === "lead" && service && (
             <LeadCard
               service={SERVICES[service]}
+              serviceKey={service}
+              answers={answers as Required<Answers>}
               onSkip={() => setStep({ kind: "result" })}
               onSubmit={() => setStep({ kind: "result" })}
             />
           )}
 
           {step.kind === "result" && service && (
-            <ResultCard service={SERVICES[service]} onRestart={restart} />
+            <ResultCard
+              service={SERVICES[service]}
+              serviceKey={service}
+              onRestart={restart}
+            />
           )}
         </section>
 
