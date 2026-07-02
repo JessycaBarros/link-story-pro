@@ -91,6 +91,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Jessyca Barros — Link da Bio" },
+      { name: "description", content: "Jessyca's Link Hub creates a customizable bio link page for your online presence." },
+      { property: "og:description", content: "Jessyca's Link Hub creates a customizable bio link page for your online presence." },
+      { name: "twitter:description", content: "Jessyca's Link Hub creates a customizable bio link page for your online presence." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/34acf288-c799-4f96-b2d1-bf79f645ae7f/id-preview-00ae8b08--be5173a2-4740-4457-86be-06516a574040.lovable.app-1782989786615.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/34acf288-c799-4f96-b2d1-bf79f645ae7f/id-preview-00ae8b08--be5173a2-4740-4457-86be-06516a574040.lovable.app-1782989786615.png" },
     ],
     links: [
       {
