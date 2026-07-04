@@ -556,6 +556,11 @@ function LeadCard({
             setError("Não foi possível enviar. Tente novamente.");
             return;
           }
+          if (typeof window !== "undefined" && typeof (window as { fbq?: (...args: unknown[]) => void }).fbq === "function") {
+            (window as { fbq: (...args: unknown[]) => void }).fbq("track", "Lead", {
+              content_name: serviceKey,
+            });
+          }
           onSubmit();
         }}
       >
