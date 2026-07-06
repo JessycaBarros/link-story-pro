@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { sendLeadToNotion } from "@/lib/notion.functions";
 
 function getSessionId(): string {
   if (typeof window === "undefined") return "ssr";
@@ -48,5 +49,9 @@ export async function submitLead(lead: LeadInsert) {
     user_agent: navigator.userAgent,
     referrer: document.referrer || null,
   });
+  if (!error) {
+    // Fire-and-forget: send to Notion CRM
+    sendLeadToNotion({ data: lead }).catch(() => {});
+  }
   return { error };
 }
