@@ -16,6 +16,17 @@ type LeadPayload = {
 
 function parseFaturamento(input?: string | null): number | null {
   if (!input) return null;
+  const ranges: Record<string, number> = {
+    "0": 0,
+    "1_2": 1.2,
+    "3_5": 3.5,
+    "6_8": 6.8,
+    "9_10": 9.10,
+    "10_15": 10.15,
+    "20_30": 20.30,
+    "40_mais": 40,
+  };
+  if (input in ranges) return ranges[input];
   const digits = input.replace(/[^\d,\.]/g, "").replace(/\./g, "").replace(",", ".");
   const n = parseFloat(digits);
   return Number.isFinite(n) ? n : null;

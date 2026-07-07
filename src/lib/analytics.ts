@@ -49,16 +49,20 @@ export async function submitLead(lead: LeadInsert) {
     referrer: document.referrer || null,
   });
   if (!error) {
-    // Fire-and-forget: send to Notion CRM via server route
     try {
-      fetch("/api/public/notion-lead", {
+      const notionResponse = await fetch("/api/public/notion-lead", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(lead),
-        keepalive: true,
-      }).catch(() => {});
+      });
+
+      if (!notionResponse.ok) {
+        const detail = await notionResponse.text().catch(() => "");
+        console.error("Notion lead sync failed", notionResponse.status, detail);
+        return { error: { message: "notion_sync_failed" } };
+      }
     } catch {
-      /* silent */
+      return { error: { message: "notion_sync_failed" } };
     }
   }
   return { error };
