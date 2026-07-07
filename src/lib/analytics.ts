@@ -1,5 +1,4 @@
 import { supabase } from "@/integrations/supabase/client";
-import { sendLeadToNotion } from "@/lib/notion.functions";
 
 function getSessionId(): string {
   if (typeof window === "undefined") return "ssr";
@@ -50,8 +49,17 @@ export async function submitLead(lead: LeadInsert) {
     referrer: document.referrer || null,
   });
   if (!error) {
-    // Fire-and-forget: send to Notion CRM
-    sendLeadToNotion({ data: lead }).catch(() => {});
+    // Fire-and-forget: send to Notion CRM via server route
+    try {
+      fetch("/api/public/notion-lead", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(lead),
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      /* silent */
+    }
   }
   return { error };
 }
