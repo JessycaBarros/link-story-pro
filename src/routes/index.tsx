@@ -83,7 +83,7 @@ const SERVICES: Record<
     message:
       "Sua oferta já é validada, o processo comercial funciona e agora você precisa de volume. Este é o momento de delegar os anúncios para um especialista e ganhar previsibilidade sem sobrecarregar sua rotina.",
     cta: "Quero delegar meus anúncios",
-    href: "https://form.respondi.app/eGQCKlLh",
+    href: "https://jessyforms-cmv6j544.manus.space",
   },
   xdigital_automacoes: {
     title: "XDigital · Automações",
