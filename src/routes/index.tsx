@@ -86,7 +86,7 @@ const SERVICES: Record<
     href: "https://jessyforms-cmv6j544.manus.space",
   },
   xdigital_automacoes: {
-    title: "XDigital · Automações",
+    title: "Automações",
     tag: "IA, WhatsApp & atendimento",
     description:
       "Automatize atendimento, follow-up e CRM com IA e WhatsApp para economizar tempo, escalar operação e aumentar suas conversões.",
@@ -96,7 +96,7 @@ const SERVICES: Record<
     href: "https://form.respondi.app/nNtzMprL",
   },
   xdigital_sistemas: {
-    title: "XDigital · Sistemas Personalizados",
+    title: "Sistemas Personalizados",
     tag: "Tecnologia sob medida",
     description:
       "Desenvolvimento de sistemas internos, plataformas, dashboards, portais e softwares personalizados para digitalizar processos e escalar operações complexas.",
