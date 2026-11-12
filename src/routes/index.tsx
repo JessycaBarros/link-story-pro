@@ -810,11 +810,11 @@ function AboutSection() {
   return (
     <div className="overflow-hidden rounded-[24px] border border-border/70 bg-card">
       <div className="grid gap-0 sm:grid-cols-[220px_1fr]">
-        <div className="relative h-64 w-full sm:h-full">
+        <div className="relative w-full sm:h-full">
           <img
             src={aboutAsset.url}
             alt="Jessyca Barros"
-            className="h-full w-full object-cover"
+            className="h-auto w-full object-cover sm:absolute sm:inset-0 sm:h-full sm:w-full"
             loading="lazy"
           />
         </div>
