@@ -327,6 +327,7 @@ function BioLink() {
 
         <Divider label="Conecte-se" />
         <SocialLinks />
+        <PromoGroups />
 
         <Divider label="Sobre" />
         <AboutSection />
