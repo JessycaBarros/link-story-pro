@@ -327,6 +327,7 @@ function BioLink() {
 
         <Divider label="Conecte-se" />
         <SocialLinks />
+        <PromoGroups />
 
         <Divider label="Sobre" />
         <AboutSection />
@@ -759,6 +760,48 @@ function SocialLinks() {
           </a>
         )
       )}
+    </div>
+  );
+}
+
+function PromoGroups() {
+  const groups = [
+    {
+      label: "Beleza, moda e casa",
+      href: "https://chat.whatsapp.com/LuSbW6mPBoi1uB3BbxEEAj",
+    },
+    {
+      label: "Promoções exclusivas de Natal",
+      href: "https://chat.whatsapp.com/IS00nsXMIhjC8uiQOM8BVW",
+    },
+  ];
+  return (
+    <div className="mt-6 rounded-[24px] border border-border/70 bg-card p-7 sm:p-8">
+      <p className="text-[10px] font-medium uppercase tracking-[0.24em] text-primary/70">
+        Cupons & promoções
+      </p>
+      <h3 className="mt-2 font-serif text-[22px] leading-snug">
+        Conheça meus grupinhos de promoções e cupons exclusivos para mulheres
+      </h3>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        Entre e receba ofertas selecionadas direto no seu WhatsApp — sem spam, só promoção de verdade.
+      </p>
+      <div className="mt-6 grid gap-3">
+        {groups.map((g) => (
+          <a
+            key={g.label}
+            href={g.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between rounded-full border border-border bg-background px-6 py-4 text-[13px] font-medium uppercase tracking-[0.16em] transition hover:border-primary hover:bg-primary/[0.04]"
+          >
+            <span>{g.label}</span>
+            <span className="font-serif text-base text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-primary">
+              →
+            </span>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
